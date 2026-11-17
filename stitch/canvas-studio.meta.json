@@ -1,0 +1,20 @@
+{
+  "projectId": "1448060580459130856",
+  "projectTitle": "QuadreStudio AI Art Canvas",
+  "screenId": "c018b47a230b4c6e82ac5d0de1e9842a",
+  "title": "QuadreStudio - Canvas Studio",
+  "width": "780",
+  "height": "2104",
+  "deviceType": "MOBILE",
+  "screenType": "DESIGN",
+  "htmlCode": {
+    "name": "projects/1448060580459130856/screens/c018b47a230b4c6e82ac5d0de1e9842a/fileEntries/html",
+    "downloadUrl": "https://stitch.googleapis.com/v1/projects/1448060580459130856/files/c018b47a230b4c6e82ac5d0de1e9842a:download",
+    "mimeType": "text/html"
+  },
+  "screenshot": {
+    "name": "projects/1448060580459130856/screens/c018b47a230b4c6e82ac5d0de1e9842a/fileEntries/screenshot",
+    "downloadUrl": "https://stitch.googleapis.com/v1/projects/1448060580459130856/files/screenshot_000660755e95a3b7023bd34d7826c15f:download",
+    "mimeType": "image/png"
+  }
+}

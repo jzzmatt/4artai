@@ -1,0 +1,20 @@
+{
+  "projectId": "1448060580459130856",
+  "projectTitle": "QuadreStudio AI Art Canvas",
+  "screenId": "88958ff907524e6c88d51742233deb78",
+  "title": "Template Manager - Admin Dashboard",
+  "width": "2560",
+  "height": "2592",
+  "deviceType": "DESKTOP",
+  "screenType": "DESIGN",
+  "htmlCode": {
+    "name": "projects/1448060580459130856/screens/88958ff907524e6c88d51742233deb78/fileEntries/html",
+    "downloadUrl": "https://stitch.googleapis.com/v1/projects/1448060580459130856/files/88958ff907524e6c88d51742233deb78:download",
+    "mimeType": "text/html"
+  },
+  "screenshot": {
+    "name": "projects/1448060580459130856/screens/88958ff907524e6c88d51742233deb78/fileEntries/screenshot",
+    "downloadUrl": "https://stitch.googleapis.com/v1/projects/1448060580459130856/files/screenshot_00066075d270fe8e0479fa94b914fad0:download",
+    "mimeType": "image/png"
+  }
+}

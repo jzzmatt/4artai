@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>QuadreStudio Admin</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Plus+Jakarta+Sans:wght@500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "on-secondary-fixed": "#2e1507",
+          "tertiary": "#000000",
+          "on-primary": "#ffffff",
+          "surface": "#faf9f5",
+          "error-container": "#ffdad6",
+          "on-secondary-container": "#795543",
+          "on-tertiary-fixed": "#00184a",
+          "surface-container-low": "#f5f4f0",
+          "on-tertiary": "#ffffff",
+          "on-surface": "#1b1c1a",
+          "on-error-container": "#93000a",
+          "primary-fixed": "#e5e2e1",
+          "on-error": "#ffffff",
+          "inverse-on-surface": "#f2f1ed",
+          "on-background": "#1b1c1a",
+          "surface-dim": "#dbdad6",
+          "outline": "#747878",
+          "tertiary-fixed-dim": "#b3c5ff",
+          "secondary": "#7a5644",
+          "on-primary-fixed-variant": "#474646",
+          "background": "#faf9f5",
+          "on-primary-fixed": "#1c1b1b",
+          "surface-container-highest": "#e3e2df",
+          "surface-container-lowest": "#ffffff",
+          "on-tertiary-fixed-variant": "#003fa5",
+          "on-primary-container": "#858383",
+          "tertiary-container": "#00184a",
+          "inverse-surface": "#30312e",
+          "surface-tint": "#5f5e5e",
+          "on-secondary": "#ffffff",
+          "inverse-primary": "#c8c6c5",
+          "outline-variant": "#c4c7c7",
+          "surface-bright": "#faf9f5",
+          "secondary-fixed": "#ffdbca",
+          "on-secondary-fixed-variant": "#5f3f2e",
+          "primary": "#000000",
+          "surface-container-high": "#e9e8e4",
+          "primary-fixed-dim": "#c8c6c5",
+          "on-surface-variant": "#444748",
+          "secondary-container": "#fdcdb6",
+          "error": "#ba1a1a",
+          "surface-container": "#efeeea",
+          "surface-variant": "#e3e2df",
+          "on-tertiary-container": "#567eea",
+          "secondary-fixed-dim": "#ebbda6",
+          "tertiary-fixed": "#dbe1ff",
+          "primary-container": "#1c1b1b"
+        },
+        "borderRadius": {
+          "DEFAULT": "1rem",
+          "lg": "2rem",
+          "xl": "3rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "space-sm": "0.5rem",
+          "margin-mobile": "1rem",
+          "space-xl": "2.5rem",
+          "gutter": "1.5rem",
+          "space-md": "1rem",
+          "margin-tablet": "1.5rem",
+          "gutter-tablet": "1rem",
+          "space-lg": "1.5rem",
+          "gutter-mobile": "0.75rem",
+          "space-xs": "0.25rem",
+          "margin": "3rem"
+        },
+        "fontFamily": {
+          "headline-md": [
+            "Plus Jakarta Sans"
+          ],
+          "display": [
+            "Plus Jakarta Sans"
+          ],
+          "body-md": [
+            "Inter"
+          ],
+          "headline-lg": [
+            "Plus Jakarta Sans"
+          ],
+          "label-sm": [
+            "JetBrains Mono"
+          ],
+          "headline-lg-mobile": [
+            "Plus Jakarta Sans"
+          ],
+          "body-sm": [
+            "Inter"
+          ],
+          "body-lg": [
+            "Inter"
+          ],
+          "label-md": [
+            "JetBrains Mono"
+          ],
+          "display-mobile": [
+            "Plus Jakarta Sans"
+          ],
+          "headline-sm": [
+            "Plus Jakarta Sans"
+          ]
+        },
+        "fontSize": {
+          "headline-md": [
+            "1.5rem",
+            {
+              "lineHeight": "2rem",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "500"
+            }
+          ],
+          "display": [
+            "3.5rem",
+            {
+              "lineHeight": "4rem",
+              "letterSpacing": "-0.03em",
+              "fontWeight": "600"
+            }
+          ],
+          "body-md": [
+            "0.9375rem",
+            {
+              "lineHeight": "1.5rem",
+              "fontWeight": "400"
+            }
+          ],
+          "headline-lg": [
+            "2.25rem",
+            {
+              "lineHeight": "2.75rem",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "500"
+            }
+          ],
+          "label-sm": [
+            "0.6875rem",
+            {
+              "lineHeight": "0.875rem",
+              "letterSpacing": "0.08em",
+              "fontWeight": "400"
+            }
+          ],
+          "headline-lg-mobile": [
+            "1.75rem",
+            {
+              "lineHeight": "2.25rem",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "500"
+            }
+          ],
+          "body-sm": [
+            "0.8125rem",
+            {
+              "lineHeight": "1.25rem",
+              "fontWeight": "400"
+            }
+          ],
+          "body-lg": [
+            "1.125rem",
+            {
+              "lineHeight": "1.75rem",
+              "letterSpacing": "-0.005em",
+              "fontWeight": "400"
+            }
+          ],
+          "label-md": [
+            "0.75rem",
+            {
+              "lineHeight": "1rem",
+              "letterSpacing": "0.06em",
+              "fontWeight": "500"
+            }
+          ],
+          "display-mobile": [
+            "2.25rem",
+            {
+              "lineHeight": "2.75rem",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "600"
+            }
+          ],
+          "headline-sm": [
+            "1.125rem",
+            {
+              "lineHeight": "1.5rem",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "600"
+            }
+          ]
+        }
+      },
+    },
+  }</script></head><body class="bg-surface-container-low font-body-md text-body-md text-on-surface antialiased min-h-screen"><header class="fixed top-0 left-0 right-0 w-full z-50 bg-surface-container-lowest border-b border-outline-variant/60 shadow-[0_1px_8px_rgba(0,0,0,0.03)]"><div class="h-16 w-full px-margin-mobile md:px-margin-tablet xl:px-margin flex items-center justify-between"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm"><div class="flex items-center gap-0.5 p-1"><span class="w-1 h-4 bg-primary rounded-[1px]"></span><span class="w-1.5 h-5 bg-primary rounded-[1px]"></span><span class="w-1 h-4 bg-primary rounded-[1px]"></span></div><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight font-semibold">QuadreStudio</span><span class="inline-flex items-center px-space-sm py-0.5 rounded-full bg-primary-container text-on-primary font-label-sm text-label-sm uppercase tracking-wider">ADMIN</span></div><nav class="hidden xl:flex items-center gap-space-xs p-1 rounded-full bg-surface-container-low" data-active-classes="bg-surface-container-high text-on-surface font-semibold rounded-full"><a aria-current="page" class="px-space-md py-1.5 transition-colors bg-surface-container-high text-on-surface font-semibold rounded-full" data-path="templates" href="#">Templates</a><a class="px-space-md py-1.5 rounded-full font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="curated-styles" href="#">Curated Styles</a><a class="px-space-md py-1.5 rounded-full font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="gallery-exhibitions" href="#">Exhibitions</a><a class="px-space-md py-1.5 rounded-full font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="access-keys" href="#">Access Keys</a><a class="px-space-md py-1.5 rounded-full font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="system-settings" href="#">Settings</a></nav></div><div class="flex items-center gap-space-md"><a class="hidden sm:inline-flex items-center gap-space-xs px-space-md py-2 rounded-full border border-outline-variant text-on-surface font-body-sm text-body-sm hover:bg-surface-container-high hover:text-on-surface transition-colors" href="#"><span class="material-symbols-outlined text-[16px]">arrow_back</span><span>Back to Studio</span></a><div class="hidden md:inline-flex items-center px-space-md py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm"><span class="w-1.5 h-1.5 rounded-full bg-secondary mr-2"></span><span>12 Active Templates</span></div><button class="inline-flex items-center gap-space-xs px-space-lg py-2 rounded-full bg-primary text-on-primary font-body-sm text-body-sm hover:bg-primary-container transition-all shadow-[0_2px_12px_rgba(0,0,0,0.12)]" type="button"><span class="material-symbols-outlined text-[18px]">add</span><span>Upload New Template</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-surface-container-low min-h-screen"><div class="flex flex-col w-full">
+<!-- Archival Context Banner & Metrology -->
+<section class="w-full px-margin-mobile md:px-margin-tablet xl:px-margin py-space-lg">
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-md">
+<div>
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider mb-1">
+<span class="inline-block w-2 h-2 rounded-full bg-secondary"></span>
+<span>Accession Master • Registry Dept. 04</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface font-semibold tracking-tight">Curatorial Style Templates</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mt-1">
+          Architectural registry of algorithmic style matrices, prompt weights, and physical texture guidelines for public generation nodes.
+        </p>
+</div>
+<!-- Quick Registry Metrics -->
+<div class="flex items-center gap-space-sm bg-surface-container-lowest p-1.5 rounded-full shadow-sm">
+<div class="px-space-md py-1 rounded-full bg-surface-container-low flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Index</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface">12 / 64 Max</span>
+</div>
+<div class="px-space-md py-1 rounded-full bg-surface-container-low flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Node Load</span>
+<span class="font-label-md text-label-md font-semibold text-secondary">99.8% Calibrated</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Workspace Container: Split 35% / 65% -->
+<div class="w-full px-margin-mobile md:px-margin-tablet xl:px-margin pb-space-xl">
+<div class="flex flex-col lg:flex-row gap-space-lg items-start">
+<!-- LEFT PANEL: Add Curated Art Style Card (~35%) -->
+<aside class="w-full lg:w-[36%] shrink-0">
+<div class="sticky top-20 bg-surface-container-lowest rounded-lg p-space-lg shadow-sm">
+<!-- Card Header -->
+<div class="flex items-start justify-between gap-space-sm pb-space-md mb-space-md">
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">palette</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-medium">Add Curated Art Style</h2>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+                Configure prompt parameters and reference aesthetics.
+              </p>
+</div>
+<span class="px-space-sm py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+              NEW REF
+            </span>
+</div>
+<form class="space-y-space-md" id="style-template-form" onsubmit="event.preventDefault();">
+<!-- Artwork Dropzone -->
+<div class="space-y-1">
+<label class="block font-label-sm text-label-sm uppercase text-on-surface-variant font-medium">
+                Reference Visual Matrix
+              </label>
+<div class="group relative flex flex-col items-center justify-center p-space-lg rounded-DEFAULT bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer text-center" id="dropzone">
+<div class="w-12 h-12 rounded-full bg-surface-container-lowest flex items-center justify-center text-on-surface group-hover:scale-105 transition-transform shadow-sm mb-space-sm">
+<span class="material-symbols-outlined text-[22px]">add_photo_alternate</span>
+</div>
+<p class="font-headline-sm text-headline-sm text-on-surface font-medium text-sm">
+                  Drop reference artwork here or browse
+                </p>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">
+                  JPG, PNG, WEBP up to 25MB • 1:1 Recommended
+                </p>
+<input accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer" type="file"/>
+</div>
+</div>
+<!-- Template Title -->
+<div class="space-y-1">
+<label class="block font-label-sm text-label-sm uppercase text-on-surface-variant font-medium" for="template-title">
+                Template Title
+              </label>
+<div class="relative">
+<input class="w-full px-space-md py-2.5 rounded-DEFAULT bg-surface-container-low text-on-surface placeholder:text-outline text-body-sm focus:outline-none focus:bg-surface-container-lowest focus:shadow-[0_0_0_2px_#1c1b1b] transition-all" id="template-title" placeholder="e.g., Geometric African Cubism" type="text" value="Geometric African Cubism"/>
+</div>
+</div>
+<!-- Art Category Select -->
+<div class="space-y-1">
+<label class="block font-label-sm text-label-sm uppercase text-on-surface-variant font-medium" for="art-category">
+                Art Category
+              </label>
+<div class="relative">
+<select class="w-full appearance-none px-space-md py-2.5 pr-10 rounded-DEFAULT bg-surface-container-low text-on-surface text-body-sm focus:outline-none focus:bg-surface-container-lowest focus:shadow-[0_0_0_2px_#1c1b1b] transition-all cursor-pointer" id="art-category">
+<option selected="" value="cubism">Cubism</option>
+<option value="afrofuturism">Afrofuturism</option>
+<option value="impasto">Impasto</option>
+<option value="bauhaus">Bauhaus</option>
+<option value="neo-expressionism">Neo-Expressionism</option>
+<option value="abstract">Abstract</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant text-[18px]">
+                  unfold_more
+                </span>
+</div>
+</div>
+<!-- GPT Astra Style Instruction -->
+<div class="space-y-1">
+<div class="flex items-center justify-between">
+<label class="block font-label-sm text-label-sm uppercase text-on-surface-variant font-medium" for="style-instruction">
+                  GPT Astra Style Instruction
+                </label>
+<span class="font-label-sm text-label-sm text-on-surface-variant">System Weight: 1.35</span>
+</div>
+<textarea class="w-full px-space-md py-2.5 rounded-DEFAULT bg-surface-container-low text-on-surface placeholder:text-outline text-body-sm focus:outline-none focus:bg-surface-container-lowest focus:shadow-[0_0_0_2px_#1c1b1b] transition-all resize-none" id="style-instruction" placeholder="Describe geometric shapes, brush texture, and color palette rules..." rows="3">Render subject through segmented multifaceted planar planes, ochre clay undertones, indigo pigment contrasts, raw linen canvas tooth exposure, high relief gouache accents.</textarea>
+</div>
+<!-- Micro Controls Strip -->
+<div class="p-space-sm rounded-DEFAULT bg-surface-container-low/70 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Latent Seed Anchor</span>
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-on-surface">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">lock</span>
+<span>FIXED #89410</span>
+</div>
+</div>
+<!-- Toggle Switch Row -->
+<div class="flex items-center justify-between pt-space-sm">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm font-medium text-on-surface">
+                  Publish immediately to user gallery
+                </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">
+                  Instantly visible to atelier patrons
+                </span>
+</div>
+<button aria-checked="true" class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full bg-primary transition-colors duration-200 ease-in-out focus:outline-none" onclick="this.setAttribute('aria-checked', this.getAttribute('aria-checked') === 'true' ? 'false' : 'true'); this.classList.toggle('bg-primary'); this.classList.toggle('bg-surface-container-highest'); const dot = this.querySelector('span'); dot.classList.toggle('translate-x-5'); dot.classList.toggle('translate-x-0.5');" role="switch" type="button">
+<span class="pointer-events-none inline-block h-5 w-5 translate-x-5 transform rounded-full bg-surface-container-lowest shadow ring-0 transition duration-200 ease-in-out mt-0.5 ml-0.5"></span>
+</button>
+</div>
+<!-- Action Button -->
+<button class="w-full mt-space-md py-3 px-space-lg rounded-DEFAULT bg-primary text-on-primary font-body-sm text-body-sm font-medium hover:bg-primary-container transition-all flex items-center justify-center gap-space-xs shadow-md active:scale-[0.99]" type="submit">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span>Save &amp; Publish Template</span>
+</button>
+</form>
+<!-- Archival Note -->
+<div class="mt-space-md pt-space-sm flex items-center gap-space-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">info</span>
+<span class="font-label-sm text-label-sm">Changes broadcast live across all client generation docks.</span>
+</div>
+</div>
+</aside>
+<!-- RIGHT PANEL: Curated Style Library Management (~65%) -->
+<main class="w-full lg:w-[64%] flex flex-col gap-space-lg">
+<!-- Top Controls Bar -->
+<section class="bg-surface-container-lowest rounded-lg p-space-md shadow-sm flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs">
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Published Style Templates</h2>
+<span class="px-2 py-0.5 rounded-full bg-surface-container font-label-sm text-label-sm font-semibold text-on-surface">12</span>
+</div>
+<!-- Sleek Search Input -->
+<div class="relative w-full sm:w-72">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">
+                search
+              </span>
+<input class="w-full pl-9 pr-space-md py-1.5 rounded-full bg-surface-container-low text-on-surface placeholder:text-outline text-body-sm focus:outline-none focus:bg-surface-container-lowest focus:shadow-[0_0_0_2px_#1c1b1b] transition-all" placeholder="Search styles by name or keyword..." type="search"/>
+</div>
+</div>
+<!-- Filter Pills Row -->
+<div class="flex items-center gap-space-xs overflow-x-auto pb-1 scrollbar-none">
+<button class="px-space-md py-1 rounded-full bg-primary text-on-primary font-label-sm text-label-sm font-medium whitespace-nowrap shadow-sm" type="button">
+              All Archetypes (12)
+            </button>
+<button class="px-space-md py-1 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm whitespace-nowrap transition-colors" type="button">
+              Cubism
+            </button>
+<button class="px-space-md py-1 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm whitespace-nowrap transition-colors" type="button">
+              Afrofuturism
+            </button>
+<button class="px-space-md py-1 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm whitespace-nowrap transition-colors" type="button">
+              Bauhaus
+            </button>
+<button class="px-space-md py-1 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm whitespace-nowrap transition-colors" type="button">
+              Impasto
+            </button>
+<button class="px-space-md py-1 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm whitespace-nowrap transition-colors" type="button">
+              Neo-Expressionism
+            </button>
+<button class="px-space-md py-1 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm whitespace-nowrap transition-colors" type="button">
+              Abstract
+            </button>
+</div>
+</section>
+<!-- 3-Column Template Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+<!-- Card 1: African Cubism -->
+<article class="group bg-surface-container-lowest rounded-DEFAULT p-3.5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+<div>
+<!-- Mat Frame Area -->
+<div class="relative aspect-square w-full rounded-DEFAULT overflow-hidden bg-surface-container mb-3 shadow-inner">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Editorial museum lighting cubist geometric portrait composed of segmented terracotta, deep cerulean blue, and polished bronze facets. Sharp architectural angular edges with raw textured oil paint impasto on linen ground." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_0ureFjwTzffDtMI5amodZIlwya1YIgu8HT0AziVb-8-HoAtQmwBKKdsOcVvSTQK5r7vHG9oICVLsSNcpPNEs_fqg3KE2HTS9MyoFVlCoD8jg5CE1bp-itozzTEGP-Iycn00BG1cU-B-OIkoalrkfOnxEECywtIYm5DXUc36E4oAfcn4-L21uALJ9JxCKhO-UyZfcnSf3KLlrIEUHvcC7t3UE-q7GWmBPyJWJirk"/>
+<div class="absolute top-2.5 left-2.5 flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-container-lowest/90 backdrop-blur-md shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm text-on-surface font-medium uppercase tracking-wider">Active</span>
+</div>
+<div class="absolute bottom-2.5 right-2.5 px-2 py-0.5 rounded-full bg-primary/80 backdrop-blur-md text-on-primary font-label-sm text-label-sm">
+                  1:1 • CFG 8.2
+                </div>
+</div>
+<!-- Metadata -->
+<div class="flex items-start justify-between gap-1 mb-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">African Cubism</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">REF-091</span>
+</div>
+<div class="flex items-center gap-space-xs text-on-surface-variant">
+<span class="px-2 py-0.5 rounded-full bg-surface-container-low font-label-sm text-label-sm">Cubism</span>
+<span class="font-label-sm text-label-sm">• 4.8k gens</span>
+</div>
+</div>
+<!-- Card Bottom Bar -->
+<div class="flex items-center justify-between pt-3 mt-3 bg-surface-container-low/50 -mx-3.5 -mb-3.5 p-3.5 rounded-b-DEFAULT">
+<button aria-checked="true" class="relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full bg-primary transition-colors duration-200 ease-in-out focus:outline-none" onclick="this.setAttribute('aria-checked', this.getAttribute('aria-checked') === 'true' ? 'false' : 'true'); this.classList.toggle('bg-primary'); this.classList.toggle('bg-surface-container-highest'); const dot = this.querySelector('span'); dot.classList.toggle('translate-x-4'); dot.classList.toggle('translate-x-0.5');" role="switch" title="Toggle Active Status" type="button">
+<span class="pointer-events-none inline-block h-4 w-4 translate-x-4 transform rounded-full bg-surface-container-lowest shadow ring-0 transition duration-200 ease-in-out mt-0.5 ml-0.5"></span>
+</button>
+<div class="flex items-center gap-space-xs">
+<button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-surface-container text-on-surface transition-colors" title="Edit Template" type="button">
+<span class="material-symbols-outlined text-[17px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-error-container text-error transition-colors" title="Delete Template" type="button">
+<span class="material-symbols-outlined text-[17px]">delete</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Card 2: Bauhaus Portrait -->
+<article class="group bg-surface-container-lowest rounded-DEFAULT p-3.5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+<div>
+<div class="relative aspect-square w-full rounded-DEFAULT overflow-hidden bg-surface-container mb-3 shadow-inner">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="High modernist Bauhaus portrait composed of pure geometric primaries: cadmium red circle, ultramarine square, and chrome yellow diagonal beam intersecting a sculpted off-white profile. Clean lithograph texture on archival newsprint." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDx7dZR_jwEoCinJgLGXNEzidrAiGf2O109mUmVlY594jNiD1tGolbExvMDY5a8OaaeQFXFnlD6afKxQXybMF4ztp6i4MtvUnY7cjAcJc4Mz--CbxQOs735dSUb6sBvj6yxxwlikm_i4CPz1lGyW4pCT-r48_DFNZHJosucOGATNq0jxmbJ7vRH7gks7m6F4bDV-qG2_S-5aDcUjsVYu77IpwSrEEpna06AnNwy4yw"/>
+<div class="absolute top-2.5 left-2.5 flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-container-lowest/90 backdrop-blur-md shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm text-on-surface font-medium uppercase tracking-wider">Active</span>
+</div>
+<div class="absolute bottom-2.5 right-2.5 px-2 py-0.5 rounded-full bg-primary/80 backdrop-blur-md text-on-primary font-label-sm text-label-sm">
+                  1:1 • CFG 7.5
+                </div>
+</div>
+<div class="flex items-start justify-between gap-1 mb-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">Bauhaus Portrait</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">REF-042</span>
+</div>
+<div class="flex items-center gap-space-xs text-on-surface-variant">
+<span class="px-2 py-0.5 rounded-full bg-surface-container-low font-label-sm text-label-sm">Bauhaus</span>
+<span class="font-label-sm text-label-sm">• 3.2k gens</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-3 mt-3 bg-surface-container-low/50 -mx-3.5 -mb-3.5 p-3.5 rounded-b-DEFAULT">
+<button aria-checked="true" class="relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full bg-primary transition-colors duration-200 ease-in-out focus:outline-none" onclick="this.setAttribute('aria-checked', this.getAttribute('aria-checked') === 'true' ? 'false' : 'true'); this.classList.toggle('bg-primary'); this.classList.toggle('bg-surface-container-highest'); const dot = this.querySelector('span'); dot.classList.toggle('translate-x-4'); dot.classList.toggle('translate-x-0.5');" role="switch" type="button">
+<span class="pointer-events-none inline-block h-4 w-4 translate-x-4 transform rounded-full bg-surface-container-lowest shadow ring-0 transition duration-200 ease-in-out mt-0.5 ml-0.5"></span>
+</button>
+<div class="flex items-center gap-space-xs">
+<button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-surface-container text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-[17px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-error-container text-error transition-colors" type="button">
+<span class="material-symbols-outlined text-[17px]">delete</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Card 3: Golden Impasto -->
+<article class="group bg-surface-container-lowest rounded-DEFAULT p-3.5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+<div>
+<div class="relative aspect-square w-full rounded-DEFAULT overflow-hidden bg-surface-container mb-3 shadow-inner">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Extreme close-up macro portrait in heavy golden impasto oil paint. Luscious sculptural palette knife strokes with raw burnt umber shadows, metallic leaf flecks, and deep varnished specular reflections." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8XsVhRGvdtwYuZZhdfIFqJapadbwuBAXeeN6f6lVrV0NhUivpDX3YSx21vtonXKTyOgI6y3VFvTi1H9ZJGZ64QEBLyb1KUKxIAqFlvdAJg53qUfv6fKTjgZaVnf5R2lND3nO0PqYJBkz7w7iSjYKUOg9UadegrzokkRj8u4YRsiiIsk7TwB9np_K-opY3PznJSO4uyaCvOJ8AcssjV7BTwHWpwbnc33ouhPdLLbk"/>
+<div class="absolute top-2.5 left-2.5 flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-container-lowest/90 backdrop-blur-md shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm text-on-surface font-medium uppercase tracking-wider">Active</span>
+</div>
+<div class="absolute bottom-2.5 right-2.5 px-2 py-0.5 rounded-full bg-primary/80 backdrop-blur-md text-on-primary font-label-sm text-label-sm">
+                  1:1 • CFG 9.0
+                </div>
+</div>
+<div class="flex items-start justify-between gap-1 mb-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">Golden Impasto</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">REF-078</span>
+</div>
+<div class="flex items-center gap-space-xs text-on-surface-variant">
+<span class="px-2 py-0.5 rounded-full bg-surface-container-low font-label-sm text-label-sm">Impasto</span>
+<span class="font-label-sm text-label-sm">• 6.1k gens</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-3 mt-3 bg-surface-container-low/50 -mx-3.5 -mb-3.5 p-3.5 rounded-b-DEFAULT">
+<button aria-checked="true" class="relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full bg-primary transition-colors duration-200 ease-in-out focus:outline-none" onclick="this.setAttribute('aria-checked', this.getAttribute('aria-checked') === 'true' ? 'false' : 'true'); this.classList.toggle('bg-primary'); this.classList.toggle('bg-surface-container-highest'); const dot = this.querySelector('span'); dot.classList.toggle('translate-x-4'); dot.classList.toggle('translate-x-0.5');" role="switch" type="button">
+<span class="pointer-events-none inline-block h-4 w-4 translate-x-4 transform rounded-full bg-surface-container-lowest shadow ring-0 transition duration-200 ease-in-out mt-0.5 ml-0.5"></span>
+</button>
+<div class="flex items-center gap-space-xs">
+<button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-surface-container text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-[17px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-error-container text-error transition-colors" type="button">
+<span class="material-symbols-outlined text-[17px]">delete</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Card 4: Neo-Expressionism -->
+<article class="group bg-surface-container-lowest rounded-DEFAULT p-3.5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+<div>
+<div class="relative aspect-square w-full rounded-DEFAULT overflow-hidden bg-surface-container mb-3 shadow-inner">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Raw Neo-Expressionist portrait painting with feverish charcoal contours, bold crimson slashes, primitive mask motifs, and spontaneous chalk scribbles across a distressed concrete background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-rI3jWLtViCm_OIo5UXe89jMffe-B5bN8IFAmayyqNLwJFgckYlSPG_w0YF_zHKyl-C7nEywanV51qzgNspwM7FqLUK7qlaQE9jo4yGayj4a9WlcAtUjACC0eKEgWnBPtKPDcPGE2F585cYfE2Z4DvIct2TJMENy0oLsxMqL0prObUV7juUwa9qAyq4s5xqGW8asmlY73Epwj3Tep98PfJsfi1rd5uIYik6oQAYA"/>
+<div class="absolute top-2.5 left-2.5 flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-container-lowest/90 backdrop-blur-md shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm text-on-surface font-medium uppercase tracking-wider">Active</span>
+</div>
+<div class="absolute bottom-2.5 right-2.5 px-2 py-0.5 rounded-full bg-primary/80 backdrop-blur-md text-on-primary font-label-sm text-label-sm">
+                  1:1 • CFG 8.8
+                </div>
+</div>
+<div class="flex items-start justify-between gap-1 mb-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">Neo-Expressionism</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">REF-015</span>
+</div>
+<div class="flex items-center gap-space-xs text-on-surface-variant">
+<span class="px-2 py-0.5 rounded-full bg-surface-container-low font-label-sm text-label-sm">Expressionism</span>
+<span class="font-label-sm text-label-sm">• 1.9k gens</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-3 mt-3 bg-surface-container-low/50 -mx-3.5 -mb-3.5 p-3.5 rounded-b-DEFAULT">
+<button aria-checked="true" class="relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full bg-primary transition-colors duration-200 ease-in-out focus:outline-none" onclick="this.setAttribute('aria-checked', this.getAttribute('aria-checked') === 'true' ? 'false' : 'true'); this.classList.toggle('bg-primary'); this.classList.toggle('bg-surface-container-highest'); const dot = this.querySelector('span'); dot.classList.toggle('translate-x-4'); dot.classList.toggle('translate-x-0.5');" role="switch" type="button">
+<span class="pointer-events-none inline-block h-4 w-4 translate-x-4 transform rounded-full bg-surface-container-lowest shadow ring-0 transition duration-200 ease-in-out mt-0.5 ml-0.5"></span>
+</button>
+<div class="flex items-center gap-space-xs">
+<button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-surface-container text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-[17px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-error-container text-error transition-colors" type="button">
+<span class="material-symbols-outlined text-[17px]">delete</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Card 5: Stained Glass (Hidden State) -->
+<article class="group bg-surface-container-lowest rounded-DEFAULT p-3.5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between opacity-85 hover:opacity-100">
+<div>
+<div class="relative aspect-square w-full rounded-DEFAULT overflow-hidden bg-surface-container mb-3 shadow-inner">
+<img class="w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500" data-alt="Luminescent cathedral stained glass abstract figure with thick dark leaded cames enclosing jewel-tone emerald, cobalt, and amber glass segments. Soft diffused god-rays scattering spectral refractions." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDe5y4nl2yEaNIHTyU2KfxSq997hG3JsU6j5xuPuzLChIasgX9SL3qNXmpLZ3lEhIQGz8t3XPsgfKuAPwaQ3Myz945EYs3SlOfwFvI9tHa3BBmAADysszf5wgWAxdDOoYptovAghK-hunWqvvQjn5mlG5YgAgTW8Vfi6H3if57_X_rmItm0W2jQRW8AtRlUxymX2nWSVLs59PrxLOO4h8wAKTeJcLPKy1TuO_VVAnA"/>
+<div class="absolute top-2.5 left-2.5 flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-container-high/90 backdrop-blur-md shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium uppercase tracking-wider">Hidden</span>
+</div>
+<div class="absolute bottom-2.5 right-2.5 px-2 py-0.5 rounded-full bg-primary/80 backdrop-blur-md text-on-primary font-label-sm text-label-sm">
+                  1:1 • CFG 7.0
+                </div>
+</div>
+<div class="flex items-start justify-between gap-1 mb-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">Stained Glass</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">REF-063</span>
+</div>
+<div class="flex items-center gap-space-xs text-on-surface-variant">
+<span class="px-2 py-0.5 rounded-full bg-surface-container-low font-label-sm text-label-sm">Abstract</span>
+<span class="font-label-sm text-label-sm">• Archived</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-3 mt-3 bg-surface-container-low/50 -mx-3.5 -mb-3.5 p-3.5 rounded-b-DEFAULT">
+<button aria-checked="false" class="relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full bg-surface-container-highest transition-colors duration-200 ease-in-out focus:outline-none" onclick="this.setAttribute('aria-checked', this.getAttribute('aria-checked') === 'true' ? 'false' : 'true'); this.classList.toggle('bg-primary'); this.classList.toggle('bg-surface-container-highest'); const dot = this.querySelector('span'); dot.classList.toggle('translate-x-4'); dot.classList.toggle('translate-x-0.5');" role="switch" type="button">
+<span class="pointer-events-none inline-block h-4 w-4 translate-x-0.5 transform rounded-full bg-surface-container-lowest shadow ring-0 transition duration-200 ease-in-out mt-0.5 ml-0.5"></span>
+</button>
+<div class="flex items-center gap-space-xs">
+<button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-surface-container text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-[17px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-error-container text-error transition-colors" type="button">
+<span class="material-symbols-outlined text-[17px]">delete</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Card 6: Afro-Pop Geometry -->
+<article class="group bg-surface-container-lowest rounded-DEFAULT p-3.5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+<div>
+<div class="relative aspect-square w-full rounded-DEFAULT overflow-hidden bg-surface-container mb-3 shadow-inner">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Afrofuturistic portrait radiating high-contrast geometric neon patterns, Ankara textile vector details, polished obsidian skin highlights, and floating gold holographic rings against deep space black." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkCT5LxTH3pwQnBEvMKges3S2RqLVM2Yl2ucSZ9GwbukFIwUNSovFP2x33e_e_3TwLcJtOA7on9rWSS2YW28G9wcxbQlD9E6OM4es1IlLKf_7K5F9yjOxK_yUVghcLSbbMKefSr55R6_SpluyPjagQDd3nHtT_UfTEnwevIG-xOOX39Dd7a7GW7nd244AofW2zCuOEgZ9WihFOlhsfis6-ujmbOFwRQqlh3tMjifM"/>
+<div class="absolute top-2.5 left-2.5 flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-container-lowest/90 backdrop-blur-md shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm text-on-surface font-medium uppercase tracking-wider">Active</span>
+</div>
+<div class="absolute bottom-2.5 right-2.5 px-2 py-0.5 rounded-full bg-primary/80 backdrop-blur-md text-on-primary font-label-sm text-label-sm">
+                  1:1 • CFG 8.4
+                </div>
+</div>
+<div class="flex items-start justify-between gap-1 mb-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">Afro-Pop Geometry</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">REF-087</span>
+</div>
+<div class="flex items-center gap-space-xs text-on-surface-variant">
+<span class="px-2 py-0.5 rounded-full bg-surface-container-low font-label-sm text-label-sm">Afrofuturism</span>
+<span class="font-label-sm text-label-sm">• 5.4k gens</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-3 mt-3 bg-surface-container-low/50 -mx-3.5 -mb-3.5 p-3.5 rounded-b-DEFAULT">
+<button aria-checked="true" class="relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full bg-primary transition-colors duration-200 ease-in-out focus:outline-none" onclick="this.setAttribute('aria-checked', this.getAttribute('aria-checked') === 'true' ? 'false' : 'true'); this.classList.toggle('bg-primary'); this.classList.toggle('bg-surface-container-highest'); const dot = this.querySelector('span'); dot.classList.toggle('translate-x-4'); dot.classList.toggle('translate-x-0.5');" role="switch" type="button">
+<span class="pointer-events-none inline-block h-4 w-4 translate-x-4 transform rounded-full bg-surface-container-lowest shadow ring-0 transition duration-200 ease-in-out mt-0.5 ml-0.5"></span>
+</button>
+<div class="flex items-center gap-space-xs">
+<button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-surface-container text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-[17px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-error-container text-error transition-colors" type="button">
+<span class="material-symbols-outlined text-[17px]">delete</span>
+</button>
+</div>
+</div>
+</article>
+</div>
+<!-- Archival Pagination / Dock Bar -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-space-md p-space-md rounded-DEFAULT bg-surface-container-lowest shadow-sm mt-space-sm">
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-on-surface-variant">
+<span>Showing 6 of 12 cataloged templates</span>
+<span>•</span>
+<span class="text-on-surface font-medium">Page 1 of 2</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="px-space-md py-1.5 rounded-full bg-surface-container-low text-outline font-label-sm text-label-sm cursor-not-allowed" disabled="" type="button">
+              Previous
+            </button>
+<button class="w-8 h-8 rounded-full bg-primary text-on-primary font-label-sm text-label-sm flex items-center justify-center" type="button">
+              1
+            </button>
+<button class="w-8 h-8 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm flex items-center justify-center hover:bg-surface-container-high transition-colors" type="button">
+              2
+            </button>
+<button class="px-space-md py-1.5 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm hover:bg-surface-container-high transition-colors" type="button">
+              Next
+            </button>
+</div>
+</div>
+</main>
+</div>
+</div>
+<script>
+    // Micro-interactions for form dropzone styling on drag & drop
+    const dropzone = document.getElementById('dropzone');
+    if (dropzone) {
+      ['dragenter', 'dragover'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          dropzone.classList.add('bg-surface-container-high');
+        }, false);
+      });
+      ['dragleave', 'drop'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          dropzone.classList.remove('bg-surface-container-high');
+        }, false);
+      });
+    }
+  </script>
+</div></main><footer class="w-full bg-surface-container-lowest border-t border-outline-variant/40 py-space-lg"><div class="w-full px-margin-mobile md:px-margin-tablet xl:px-margin flex flex-col sm:flex-row items-center justify-between gap-space-md"><div class="flex items-center gap-space-sm"><span class="font-headline-sm text-headline-sm text-on-surface font-medium">QuadreStudio</span><span class="font-label-sm text-label-sm text-on-surface-variant">— Archival Admin Console</span></div><p class="font-label-sm text-label-sm text-on-surface-variant">© 2025 QuadreStudio. Museum-grade generative atelier.</p></div></footer></body></html>
