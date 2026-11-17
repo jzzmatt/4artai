@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { DEFAULT_STYLE, FUSION_PLACEHOLDER, categoryLabel } from "../data/templates";
+import { saveFusionRecord } from "../lib/library";
 import { supabase } from "../lib/supabase";
 import { uploadPrivateBlob, uploadPrivateImage, uploadTemplateImage } from "../lib/storage";
 import { useAuth } from "./AuthProvider";
@@ -32,6 +33,8 @@ interface StudioContextValue {
   webcamOpen: boolean;
   fusionNote: string | null;
   fusionState: "idle" | "working";
+  fusionSaved: boolean;
+  fusionTitle: string;
   exportState: "idle" | "working" | "done" | "error";
   exportError: string | null;
   setOriginalFile: (file: File) => Promise<void>;
@@ -48,6 +51,7 @@ interface StudioContextValue {
   updateTemplate: (id: string, patch: Partial<StyleTemplate>) => Promise<void>;
   deleteTemplate: (id: string) => Promise<void>;
   requestFusion: () => Promise<void>;
+  saveFusion: () => Promise<void>;
   exportQuadre: () => Promise<void>;
 }
 
@@ -97,6 +101,8 @@ export function StudioProvider({ children }: { children: ReactNode }) {
   const [styleRemoteUrl, setStyleRemoteUrl] = useState<string | null>(null);
   const [fusionUrl, setFusionUrl] = useState(FUSION_PLACEHOLDER);
   const [fusionState, setFusionState] = useState<"idle" | "working">("idle");
+  const [fusionRecordId, setFusionRecordId] = useState<string | null>(null);
+  const [fusionSaved, setFusionSaved] = useState(false);
   const fusionLock = useRef(false);
   const [styleTemplate, setStyleTemplate] = useState<StyleTemplate>(DEFAULT_STYLE);
   const [frameFinish, setFrameFinish] = useState<FrameFinish>("gallery-white");
@@ -311,19 +317,36 @@ export function StudioProvider({ children }: { children: ReactNode }) {
           originalImageUrl: original,
           styleImageUrl: style,
           promptInstruction: styleTemplate.promptInstruction,
+          title: styleTemplate.title,
           frameConfig: { frameFinish, museumMat, spacing, wallPreview },
         },
       });
       if (error) throw new Error(await functionError(error));
-      const payload = data as { fusionUrl?: string; creditsRemaining?: number; error?: string };
+      const payload = data as { fusionUrl?: string; quadreId?: string; creditsRemaining?: number; error?: string };
       if (!payload.fusionUrl) throw new Error(payload.error || "The fusion did not return an image.");
       setFusionUrl(payload.fusionUrl);
+      setFusionRecordId(payload.quadreId ?? null);
+      setFusionSaved(false);
       if (typeof payload.creditsRemaining === "number") setCredits(payload.creditsRemaining);
     } catch (error) {
       setFusionNote(error instanceof Error ? error.message : "The fusion could not be generated.");
     } finally {
       fusionLock.current = false;
       setFusionState("idle");
+    }
+  };
+
+  const saveFusion = async () => {
+    if (!fusionRecordId) {
+      setFusionNote("Generate a fusion before saving it.");
+      return;
+    }
+    try {
+      await saveFusionRecord(fusionRecordId, styleTemplate.title || "Studio fusion");
+      setFusionSaved(true);
+      setFusionNote("Saved to your library.");
+    } catch (error) {
+      setFusionNote(error instanceof Error ? error.message : "The fusion could not be saved.");
     }
   };
 
@@ -365,6 +388,8 @@ export function StudioProvider({ children }: { children: ReactNode }) {
     webcamOpen,
     fusionNote,
     fusionState,
+    fusionSaved,
+    fusionTitle: styleTemplate.title,
     exportState,
     exportError,
     setOriginalFile,
@@ -381,6 +406,7 @@ export function StudioProvider({ children }: { children: ReactNode }) {
     updateTemplate,
     deleteTemplate,
     requestFusion,
+    saveFusion,
     exportQuadre,
   };
 

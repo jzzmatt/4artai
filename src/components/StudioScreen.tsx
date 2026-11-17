@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { DEFAULT_STYLE, LOGO_URL } from "../data/templates";
+import { DEFAULT_STYLE, FUSION_PLACEHOLDER, LOGO_URL } from "../data/templates";
 import { useAuth } from "../state/AuthProvider";
 import { useStudio } from "../state/StudioProvider";
 import type { FrameFinish, PanelSpacing } from "../types";
 import { imageFileError } from "../utils/files";
 import { InstallAppButton } from "./InstallAppButton";
 import { ProfileMenu } from "./ProfileMenu";
+import { ShareSheet } from "./ShareSheet";
+import { StudioNav } from "./StudioNav";
 import { StyleLibraryModal } from "./StyleLibraryModal";
 import { WebcamModal } from "./WebcamModal";
 
@@ -41,8 +42,10 @@ export function StudioScreen() {
   const { session, credits } = useAuth();
   const [dragOver, setDragOver] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [shareOpen, setShareOpen] = useState(false);
   const [logoFailed, setLogoFailed] = useState(false);
   const usingDefaultStyle = studio.styleTemplate.title === DEFAULT_STYLE.title;
+  const hasFusion = studio.fusionUrl !== FUSION_PLACEHOLDER;
   const creditLabel = session && credits !== null ? `${credits} Free Credits` : "5 Free Credits";
 
   const takeFile = async (file: File | undefined) => {
@@ -279,6 +282,25 @@ export function StudioScreen() {
                 <span>{studio.fusionState === "working" ? "Generating…" : "Generate Fusion"}</span>
                 <span className="text-xs px-2 py-0.5 rounded-full bg-surface-container-highest/20 font-label-sm text-surface">1 Token</span>
               </button>
+              {hasFusion ? (
+                <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
+                  <button
+                    className="min-h-[44px] px-space-md rounded-full bg-surface-container text-on-surface font-label-md text-label-md"
+                    type="button"
+                    onClick={() => void studio.saveFusion()}
+                    disabled={studio.fusionSaved}
+                  >
+                    {studio.fusionSaved ? "Saved" : "Save to library"}
+                  </button>
+                  <button
+                    className="min-h-[44px] px-space-md rounded-full bg-surface-container text-on-surface font-label-md text-label-md"
+                    type="button"
+                    onClick={() => setShareOpen(true)}
+                  >
+                    Share
+                  </button>
+                </div>
+              ) : null}
               {studio.fusionNote ? <p className="mt-3 max-w-md text-center font-label-sm text-label-sm text-on-surface-variant">{studio.fusionNote}</p> : null}
               {uploadError ? <p className="mt-2 font-label-sm text-label-sm text-error">{uploadError}</p> : null}
               {studio.exportError ? <p className="mt-2 font-label-sm text-label-sm text-error">{studio.exportError}</p> : null}
@@ -364,32 +386,10 @@ export function StudioScreen() {
           </div>
         </div>
       </main>
-      <nav className="fixed bottom-0 inset-x-0 z-50 pb-safe bg-surface/85 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.04)]">
-        <div className="flex justify-around items-center h-16 px-space-sm max-w-lg mx-auto">
-          <Link aria-current="page" className="min-h-[44px] min-w-[44px] flex flex-col items-center justify-center gap-0.5 transition-colors text-primary font-medium" to="/">
-            <span className="material-symbols-outlined text-[20px]">draw</span>
-            <span className="font-label-sm text-label-sm">Canvas</span>
-          </Link>
-          <button
-            className="min-h-[44px] min-w-[44px] flex flex-col items-center justify-center gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors"
-            type="button"
-            onClick={() => studio.setStyleLibraryOpen(true)}
-          >
-            <span className="material-symbols-outlined text-[20px]">auto_awesome</span>
-            <span className="font-label-sm text-label-sm">Styles</span>
-          </button>
-          <span className="min-h-[44px] min-w-[44px] flex flex-col items-center justify-center gap-0.5 text-on-surface-variant">
-            <span className="material-symbols-outlined text-[20px]">museum</span>
-            <span className="font-label-sm text-label-sm">Gallery</span>
-          </span>
-          <span className="min-h-[44px] min-w-[44px] flex flex-col items-center justify-center gap-0.5 text-on-surface-variant">
-            <span className="material-symbols-outlined text-[20px]">folder_special</span>
-            <span className="font-label-sm text-label-sm">Archive</span>
-          </span>
-        </div>
-      </nav>
+      <StudioNav current="canvas" />
       <StyleLibraryModal />
       <WebcamModal />
+      <ShareSheet open={shareOpen} title={studio.fusionTitle} url={studio.fusionUrl} onClose={() => setShareOpen(false)} />
     </div>
   );
 }

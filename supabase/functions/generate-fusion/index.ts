@@ -100,6 +100,7 @@ Deno.serve(async (request) => {
   let originalImageUrl = "";
   let styleImageUrl = "";
   let promptInstruction = "";
+  let requestedTitle = "";
   let frameConfig: Record<string, unknown> = {};
   try {
     const body = (await request.json()) as {
@@ -107,10 +108,12 @@ Deno.serve(async (request) => {
       styleImageUrl?: unknown;
       promptInstruction?: unknown;
       frameConfig?: unknown;
+      title?: unknown;
     };
     originalImageUrl = storageUrl(body.originalImageUrl, "The portrait");
     styleImageUrl = storageUrl(body.styleImageUrl, "The style image");
     promptInstruction = typeof body.promptInstruction === "string" ? body.promptInstruction.trim().slice(0, 4000) : "";
+    requestedTitle = typeof body.title === "string" ? body.title.trim().slice(0, 120) : "";
     if (body.frameConfig && typeof body.frameConfig === "object" && !Array.isArray(body.frameConfig)) {
       frameConfig = body.frameConfig as Record<string, unknown>;
     }
@@ -211,19 +214,23 @@ Deno.serve(async (request) => {
 
   const saved = await fetch(`${INTERNAL}/rest/v1/quadres`, {
     method: "POST",
-    headers: { ...serviceHeaders, Prefer: "return=minimal" },
+    headers: { ...serviceHeaders, Prefer: "return=representation" },
     body: JSON.stringify({
       user_id: user.id,
       original_url: originalImageUrl,
-      fusion_url: fusionUrl,
+      fusion_url: path,
       style_url: styleImageUrl,
       frame_config: frameConfig,
+      title: requestedTitle || "Studio fusion",
+      is_saved: false,
     }),
   });
-  if (!saved.ok) {
+  const savedRows = (await saved.json().catch(() => null)) as { id?: string }[] | null;
+  const quadreId = savedRows?.[0]?.id;
+  if (!saved.ok || !quadreId) {
     await refund();
     return json({ error: "The portrait was stored but the studio record could not be saved." }, 502);
   }
 
-  return json({ fusionUrl, creditsRemaining });
+  return json({ fusionUrl, fusionPath: path, quadreId, creditsRemaining });
 });

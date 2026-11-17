@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AdminScreen } from "./components/AdminScreen";
+import { LibraryScreen } from "./components/LibraryScreen";
 import { StudioScreen } from "./components/StudioScreen";
 import { AuthProvider, useAuth } from "./state/AuthProvider";
 import { StudioProvider } from "./state/StudioProvider";
@@ -22,6 +23,7 @@ export default function App() {
         <StudioProvider>
           <Routes>
             <Route path="/" element={<StudioScreen />} />
+            <Route path="/library" element={<LibraryScreen />} />
             <Route path="/admin" element={<AdminRoute />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

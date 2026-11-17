@@ -40,6 +40,9 @@ export function ProfileMenu() {
           <p className="px-space-sm pb-2 font-label-sm text-label-sm text-on-surface-variant">
             {credits === null ? "Credits unavailable" : `${credits} credits`}
           </p>
+          <Link className="flex items-center min-h-[40px] px-space-sm rounded-full hover:bg-surface-container text-on-surface font-label-md text-label-md" to="/library" role="menuitem" onClick={() => setOpen(false)}>
+            My library
+          </Link>
           {role === "admin" ? (
             <Link className="flex items-center min-h-[40px] px-space-sm rounded-full hover:bg-surface-container text-on-surface font-label-md text-label-md" to="/admin" role="menuitem" onClick={() => setOpen(false)}>
               Admin Studio

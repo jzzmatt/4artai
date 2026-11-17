@@ -33,6 +33,7 @@ export function AdminScreen() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [dragOver, setDragOver] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
+  const [published, setPublished] = useState<string | null>(null);
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
   const [page, setPage] = useState(1);
@@ -91,7 +92,8 @@ export function AdminScreen() {
       return;
     }
     try {
-      await studio.saveTemplate(draft, editingId);
+      const template = await studio.saveTemplate(draft, editingId);
+      setPublished(template.isActive ? `${template.title} is now in the style library.` : `${template.title} was saved as archived.`);
       resetDraft();
       setPage(1);
     } catch (reason) {
@@ -180,8 +182,9 @@ export function AdminScreen() {
                 </div>
                 <h1 className="font-headline-lg text-headline-lg text-on-surface font-semibold tracking-tight">Curatorial Style Templates</h1>
                 <p className="font-body-md text-body-md text-on-surface-variant max-w-2xl mt-1">
-                  Architectural registry of algorithmic style matrices, prompt weights, and physical texture guidelines for public generation nodes.
+                  Upload a style image, title, and instruction. Active templates appear in every user's Style Library.
                 </p>
+                {published ? <p className="font-body-sm text-body-sm text-on-surface mt-2">{published}</p> : null}
                 {studio.registryError ? <p className="font-body-sm text-body-sm text-error mt-2">{studio.registryError}</p> : null}
               </div>
               <div className="flex items-center gap-space-sm bg-surface-container-lowest p-1.5 rounded-full shadow-sm">
