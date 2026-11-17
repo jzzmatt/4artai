@@ -8,6 +8,12 @@ function extensionFor(type: string) {
   return "jpg";
 }
 
+export async function uploadPrivateBlob(bucket: PrivateBucket, blob: Blob, filename: string) {
+  const type = blob.type || "image/jpeg";
+  const file = new File([blob], `${filename}.${extensionFor(type)}`, { type });
+  return uploadPrivateImage(bucket, file);
+}
+
 export async function uploadPrivateImage(bucket: PrivateBucket, file: File) {
   const { data: sessionData } = await supabase.auth.getSession();
   const userId = sessionData.session?.user.id;

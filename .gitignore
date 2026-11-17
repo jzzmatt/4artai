@@ -4,3 +4,5 @@ dist
 .env
 .env.local
 *.local
+supabase/functions/**/.env
+supabase/functions/**/openai.key

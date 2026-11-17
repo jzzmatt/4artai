@@ -1,7 +1,8 @@
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { DEFAULT_STYLE, FUSION_PLACEHOLDER, categoryLabel } from "../data/templates";
 import { supabase } from "../lib/supabase";
-import { uploadPrivateImage, uploadTemplateImage } from "../lib/storage";
+import { uploadPrivateBlob, uploadPrivateImage, uploadTemplateImage } from "../lib/storage";
+import { useAuth } from "./AuthProvider";
 import { mapStyleTemplate, type StyleTemplateRow } from "../lib/styleTemplates";
 import type { FrameFinish, PanelSpacing, StyleTemplate } from "../types";
 import { downloadBlob, renderQuadre } from "../utils/canvasCompositor";
@@ -30,6 +31,7 @@ interface StudioContextValue {
   styleLibraryOpen: boolean;
   webcamOpen: boolean;
   fusionNote: string | null;
+  fusionState: "idle" | "working";
   exportState: "idle" | "working" | "done" | "error";
   exportError: string | null;
   setOriginalFile: (file: File) => Promise<void>;
@@ -45,7 +47,7 @@ interface StudioContextValue {
   saveTemplate: (draft: DraftTemplate, editingId?: string | null) => Promise<StyleTemplate>;
   updateTemplate: (id: string, patch: Partial<StyleTemplate>) => Promise<void>;
   deleteTemplate: (id: string) => Promise<void>;
-  requestFusion: () => void;
+  requestFusion: () => Promise<void>;
   exportQuadre: () => Promise<void>;
 }
 
@@ -57,13 +59,45 @@ function replaceTemplate(templates: StyleTemplate[], next: StyleTemplate) {
   return templates.map((template) => (template.id === next.id ? next : template));
 }
 
+function studioStorageUrl(value: string | null) {
+  if (!value) return null;
+  try {
+    const url = new URL(value);
+    if (url.protocol === "https:" && url.hostname === "supabase-picasso.wems.ao" && url.pathname.startsWith("/storage/v1/")) {
+      return url.toString();
+    }
+  } catch {
+    return null;
+  }
+  return null;
+}
+
+async function functionError(error: unknown) {
+  if (error && typeof error === "object" && "context" in error) {
+    const context = (error as { context?: { json?: () => Promise<{ error?: string }> } }).context;
+    if (context?.json) {
+      try {
+        const body = await context.json();
+        if (typeof body.error === "string" && body.error) return body.error;
+      } catch {
+        return "The fusion could not be generated.";
+      }
+    }
+  }
+  return error instanceof Error ? error.message : "The fusion could not be generated.";
+}
+
 export function StudioProvider({ children }: { children: ReactNode }) {
+  const { setCredits } = useAuth();
   const [templates, setTemplates] = useState<StyleTemplate[]>([]);
   const [registryError, setRegistryError] = useState<string | null>(null);
   const [originalUrl, setOriginalUrlState] = useState<string | null>(null);
   const [originalName, setOriginalName] = useState<string | null>(null);
   const [originalRemoteUrl, setOriginalRemoteUrl] = useState<string | null>(null);
   const [styleRemoteUrl, setStyleRemoteUrl] = useState<string | null>(null);
+  const [fusionUrl, setFusionUrl] = useState(FUSION_PLACEHOLDER);
+  const [fusionState, setFusionState] = useState<"idle" | "working">("idle");
+  const fusionLock = useRef(false);
   const [styleTemplate, setStyleTemplate] = useState<StyleTemplate>(DEFAULT_STYLE);
   const [frameFinish, setFrameFinish] = useState<FrameFinish>("gallery-white");
   const [museumMat, setMuseumMat] = useState(true);
@@ -115,12 +149,24 @@ export function StudioProvider({ children }: { children: ReactNode }) {
   const setOriginalUrl = (url: string, name = "Captured portrait") => {
     setOriginalUrlState(url);
     setOriginalName(name);
+    setOriginalRemoteUrl(null);
     setFusionNote(null);
+    if (!url.startsWith("data:")) return;
+    void fetch(url)
+      .then((response) => response.blob())
+      .then((blob) => uploadPrivateBlob("originals", blob, "portrait"))
+      .then((remote) => setOriginalRemoteUrl(remote))
+      .catch((error: unknown) => {
+        setOriginalRemoteUrl(null);
+        setFusionNote(error instanceof Error ? error.message : "The portrait could not be stored.");
+      });
   };
 
   const setOriginalFile = async (file: File) => {
     const url = await readImageFile(file);
-    setOriginalUrl(url, file.name);
+    setOriginalUrlState(url);
+    setOriginalName(file.name);
+    setFusionNote(null);
     try {
       setOriginalRemoteUrl(await uploadPrivateImage("originals", file));
     } catch (error) {
@@ -228,20 +274,57 @@ export function StudioProvider({ children }: { children: ReactNode }) {
     setStyleRemoteUrl(template.imageUrl.startsWith("http") ? template.imageUrl : null);
   };
 
-  const requestFusion = () => {
+  const requestFusion = async () => {
+    if (fusionLock.current) return;
     if (!originalUrl) {
       setFusionNote("Upload a source portrait before generating a fusion.");
       return;
     }
-    if (!originalRemoteUrl) {
-      setFusionNote("Sign in so the portrait can be stored, then generate the fusion.");
-      return;
+    fusionLock.current = true;
+    setFusionState("working");
+    setFusionNote(null);
+    try {
+      let original = studioStorageUrl(originalRemoteUrl);
+      if (!original && originalUrl.startsWith("data:")) {
+        original = await uploadPrivateBlob("originals", await (await fetch(originalUrl)).blob(), "portrait");
+        setOriginalRemoteUrl(original);
+      }
+      if (!original) {
+        setFusionNote("Sign in so the portrait can be stored, then generate the fusion.");
+        return;
+      }
+
+      let style = studioStorageUrl(styleRemoteUrl) ?? studioStorageUrl(styleTemplate.imageUrl);
+      if (!style) {
+        const response = await fetch(styleTemplate.imageUrl);
+        if (!response.ok) throw new Error("The style image could not be loaded.");
+        style = await uploadPrivateBlob("styles", await response.blob(), "style");
+        setStyleRemoteUrl(style);
+      }
+      if (!style) {
+        setFusionNote("Sign in so the style can be stored, then generate the fusion.");
+        return;
+      }
+
+      const { data, error } = await supabase.functions.invoke("generate-fusion", {
+        body: {
+          originalImageUrl: original,
+          styleImageUrl: style,
+          promptInstruction: styleTemplate.promptInstruction,
+          frameConfig: { frameFinish, museumMat, spacing, wallPreview },
+        },
+      });
+      if (error) throw new Error(await functionError(error));
+      const payload = data as { fusionUrl?: string; creditsRemaining?: number; error?: string };
+      if (!payload.fusionUrl) throw new Error(payload.error || "The fusion did not return an image.");
+      setFusionUrl(payload.fusionUrl);
+      if (typeof payload.creditsRemaining === "number") setCredits(payload.creditsRemaining);
+    } catch (error) {
+      setFusionNote(error instanceof Error ? error.message : "The fusion could not be generated.");
+    } finally {
+      fusionLock.current = false;
+      setFusionState("idle");
     }
-    if (styleTemplate.source === "custom" && !styleRemoteUrl) {
-      setFusionNote("Sign in so the custom style can be stored, then generate the fusion.");
-      return;
-    }
-    setFusionNote("GPT Astra is not connected yet. Add the endpoint and key to finish generation.");
   };
 
   const exportQuadre = async () => {
@@ -250,7 +333,7 @@ export function StudioProvider({ children }: { children: ReactNode }) {
     try {
       const blob = await renderQuadre({
         originalUrl,
-        fusionUrl: FUSION_PLACEHOLDER,
+        fusionUrl,
         styleUrl: styleTemplate.imageUrl,
         frameFinish,
         museumMat,
@@ -269,7 +352,7 @@ export function StudioProvider({ children }: { children: ReactNode }) {
   const value: StudioContextValue = {
     originalUrl,
     originalName,
-    fusionUrl: FUSION_PLACEHOLDER,
+    fusionUrl,
     styleTemplate,
     frameFinish,
     museumMat,
@@ -281,6 +364,7 @@ export function StudioProvider({ children }: { children: ReactNode }) {
     styleLibraryOpen,
     webcamOpen,
     fusionNote,
+    fusionState,
     exportState,
     exportError,
     setOriginalFile,

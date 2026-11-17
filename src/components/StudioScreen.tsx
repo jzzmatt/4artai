@@ -221,6 +221,7 @@ export function StudioScreen() {
                       className="w-full h-full object-cover rounded-sm filter brightness-[1.01] contrast-[1.03]"
                       src={studio.fusionUrl}
                     />
+                    {studio.fusionState === "working" ? <div className="absolute inset-0 bg-surface-container/80 animate-pulse" /> : null}
                     <div className="absolute top-2.5 right-2.5 bg-surface/90 backdrop-blur-md px-2.5 py-1 rounded-full shadow-sm flex items-center gap-1 text-on-surface">
                       <span className="material-symbols-outlined text-[13px] text-tertiary-container animate-spin" style={{ animationDuration: "6s" }}>auto_fix_high</span>
                       <span className="font-label-sm text-label-sm font-semibold tracking-wider">AI FUSION</span>
@@ -271,10 +272,11 @@ export function StudioScreen() {
               <button
                 className="group relative px-8 py-3.5 rounded-full bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center gap-2.5 shadow-[0_12px_32px_-4px_rgba(0,0,0,0.25)] hover:shadow-[0_16px_40px_-2px_rgba(43,89,195,0.4)] active:scale-95 transition-all"
                 type="button"
-                onClick={studio.requestFusion}
+                onClick={() => void studio.requestFusion()}
+                disabled={studio.fusionState === "working"}
               >
                 <span className="material-symbols-outlined text-[22px] text-tertiary-fixed animate-pulse">auto_awesome</span>
-                <span>Generate Fusion</span>
+                <span>{studio.fusionState === "working" ? "Generating…" : "Generate Fusion"}</span>
                 <span className="text-xs px-2 py-0.5 rounded-full bg-surface-container-highest/20 font-label-sm text-surface">1 Token</span>
               </button>
               {studio.fusionNote ? <p className="mt-3 max-w-md text-center font-label-sm text-label-sm text-on-surface-variant">{studio.fusionNote}</p> : null}

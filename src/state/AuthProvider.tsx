@@ -10,6 +10,7 @@ interface AuthContextValue {
   role: StudioRole | null;
   credits: number | null;
   openAuth: () => void;
+  setCredits: (value: number) => void;
   signOut: () => Promise<void>;
 }
 
@@ -74,6 +75,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       role,
       credits,
       openAuth: () => setAuthOpen(true),
+      setCredits,
       signOut: async () => {
         await supabase.auth.signOut();
       },
